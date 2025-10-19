@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeadlineGuard - Never Miss an Immigration Deadline Again</title>
+    <meta name="description" content="Deadline management software built specifically for Canadian immigration consultants. Auto-track visa deadlines, document expiry dates, and critical milestones.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: #dc2626;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo::before {
+            content: "⏰";
+            font-size: 28px;
+        }
+        
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            color: #111827;
+        }
+        
+        .hero .highlight {
+            color: #dc2626;
+            position: relative;
+        }
+        
+        .hero .subtitle {
+            font-size: 24px;
+            color: #6b7280;
+            margin-bottom: 16px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero .warning {
+            font-size: 20px;
+            color: #dc2626;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+        
+        .badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .badge {
+            background: #fee2e2;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #991b1b;
+            font-size: 15px;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #dc2626;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            padding: 60px 0;
+            margin: 60px 0;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .cta-section p {
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+        
+        .email-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .email-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 18px 24px;
+            font-size: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+        
+        .email-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .email-input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .cta-button {
+            padding: 18px 40px;
+            background: white;
+            color: #dc2626;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+        
+        .success-message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid rgba(16, 185, 129, 0.5);
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        .trust-badge {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+        
+        .problem {
+            padding: 80px 0;
+            background: #f9fafb;
+        }
+        
+        .problem h2 {
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+        
+        .problem-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: #6b7280;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .problem-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .problem-card:hover {
+            border-color: #dc2626;
+        }
+        
+        .problem-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .problem-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+        
+        .problem-card p {
+            color: #6b7280;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .solution {
+            padding: 80px 0;
+        }
+        
+        .solution h2 {
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+        
+        .solution-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: #6b7280;
+            margin-bottom: 60px;
+        }
+        
+        .solution-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            position: relative;
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 auto 24px;
+        }
+        
+        .step h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+        
+        .step p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+        
+        .features {
+            padding: 80px 0;
+            background: #f9fafb;
+        }
+        
+        .features h2 {
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #111827;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+        
+        .feature-card p {
+            color: #6b7280;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .pricing {
+            padding: 80px 0;
+        }
+        
+        .pricing h2 {
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+        
+        .pricing-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+        
+        .pricing-roi {
+            text-align: center;
+            font-size: 20px;
+            color: #dc2626;
+            font-weight: 600;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .pricing-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border: 3px solid #dc2626;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 12px 32px rgba(220,38,38,0.15);
+        }
+        
+        .pricing-badge {
+            background: #dc2626;
+            color: white;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .pricing-card h3 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+        
+        .price {
+            font-size: 64px;
+            font-weight: 700;
+            color: #dc2626;
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 24px;
+            color: #6b7280;
+        }
+        
+        .price-note {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .feature-list {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .feature-list li {
+            padding: 12px 0;
+            color: #4b5563;
+            list-style: none;
+            position: relative;
+            padding-left: 32px;
+            font-size: 16px;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        footer {
+            background: #111827;
+            color: white;
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+        
+        footer p {
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero .subtitle {
+                font-size: 18px;
+            }
+            
+            .email-form {
+                flex-direction: column;
+            }
+            
+            .email-input,
+            .cta-button {
+                width: 100%;
+            }
+            
+            .stat-row {
+                gap: 30px;
+            }
+            
+            .problem h2,
+            .solution h2,
+            .features h2,
+            .pricing h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">DeadlineGuard</div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Never Miss an <span class="highlight">Immigration Deadline</span> Again</h1>
+            <p class="subtitle">Deadline management software built specifically for Canadian immigration consultants. Auto-track visa deadlines, document expiry dates, and critical milestones.</p>
+            <p class="warning">Because one missed deadline can cost your client everything.</p>
+            
+            <div class="badge-row">
+                <div class="badge">🇨🇦 Built for Canadian Immigration</div>
+                <div class="badge">⚡ Auto-Populating Deadlines</div>
+                <div class="badge">📱 Email & SMS Alerts</div>
+            </div>
+            
+            <div class="stat-row">
+                <div class="stat">
+                    <span class="stat-number">$10k+</span>
+                    <span class="stat-label">Cost of one missed deadline</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Deadlines per case</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Monitoring & alerts</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Join the Waitlist</h2>
+            <p>Launching in 2 weeks. First 50 consultants lock in $49/mo forever (regular price $69/mo).</p>
+            <form class="email-form" id="waitlistForm">
+                <input type="email" class="email-input" placeholder="Enter your work email" required id="emailInput">
+                <button type="submit" class="cta-button">Get Early Access</button>
+            </form>
+            <div class="success-message" id="successMessage">
+                🎉 You're on the list! We'll email you when we launch.
+            </div>
+            <div class="trust-badge">✓ No spam  •  ✓ Cancel anytime  •  ✓ 14-day money-back guarantee</div>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="container">
+            <h2>Stop Managing Deadlines in Google Calendar</h2>
+            <p class="problem-subtitle">You're juggling 50+ cases. Each with dozens of time-sensitive deadlines. One mistake and your client's application gets rejected.</p>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">😰</div>
+                    <h3>Manual Deadline Tracking</h3>
+                    <p>You manually enter every deadline into Google Calendar. It's tedious, error-prone, and you're always worried you forgot something.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🚨</div>
+                    <h3>Missed Critical Dates</h3>
+                    <p>Document submission deadline, visa expiry, interview date. Miss one and the application gets rejected. Your client loses $5,000-10,000.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📋</div>
+                    <h3>Complex Visa Rules</h3>
+                    <p>Express Entry has different deadlines than Study Permits. Family Sponsorship is different again. You can't remember all the rules.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="solution">
+        <div class="container">
+            <h2>How DeadlineGuard Works</h2>
+            <p class="solution-subtitle">Set it once. We handle the rest.</p>
+            
+            <div class="solution-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Select Visa Type</h3>
+                    <p>Choose from Express Entry, Study Permit, Work Permit, Family Sponsorship, etc. Our system knows all the Canadian immigration deadlines.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Deadlines Auto-Populate</h3>
+                    <p>All critical deadlines appear instantly: document submission, medical exam, police certificate, visa expiry, everything.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Smart Alerts</h3>
+                    <p>Receive email/SMS reminders at 30 days, 7 days, and 1 day before each deadline. Never miss another date.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Built for Immigration Consultants</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🇨🇦</div>
+                    <h3>Canadian Immigration Specific</h3>
+                    <p>Pre-loaded templates for Express Entry, Study Permits, Work Permits, Family Sponsorship, PNPs, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Auto-Populating Deadlines</h3>
+                    <p>Select visa type, add client, done. All deadlines appear automatically based on IRCC rules and processing times.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Email & SMS Alerts</h3>
+                    <p>Get notified before critical deadlines. Customizable reminder schedule (30/7/1 days before).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Client Portal</h3>
+                    <p>Clients can see their own deadlines and upload documents. Less "when is my deadline?" emails for you.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Dashboard View</h3>
+                    <p>See all upcoming deadlines across all clients in one place. Sort by urgency, client, or visa type.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Smart Updates</h3>
+                    <p>If processing times change or documents get delayed, deadlines automatically adjust. No manual recalculation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container">
+            <h2>Simple, Affordable Pricing</h2>
+            <p class="pricing-subtitle">No contracts. Cancel anytime. 14-day money-back guarantee.</p>
+            <p class="pricing-roi">One missed deadline = $10,000 lost. DeadlineGuard = $588/year.</p>
+            
+            <div class="pricing-card">
+                <div class="pricing-badge">Early Adopter Pricing</div>
+                <h3>Professional Plan</h3>
+                <div class="price">$49<span>/mo</span></div>
+                <p class="price-note">Lock in this rate forever - launching at $69/mo soon</p>
+                <ul class="feature-list">
+                    <li>Unlimited clients & cases</li>
+                    <li>All Canadian visa types</li>
+                    <li>Auto-populating deadlines</li>
+                    <li>Email & SMS alerts</li>
+                    <li>Client portal access</li>
+                    <li>Dashboard & reporting</li>
+                    <li>Priority email support</li>
+                    <li>14-day money-back guarantee</li>
+                </ul>
+                <p style="font-size: 14px; color: #dc2626; font-weight: 600; margin-bottom: 20px;">🎁 First 50 users lock in $49/mo forever (Regular price: $69/mo)</p>
+                <a href="#waitlist" class="cta-button" style="display: inline-block; text-decoration: none;">Join Waitlist</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="waitlist">
+        <div class="container">
+            <h2>Ready to Stop Worrying About Deadlines?</h2>
+            <p>Join 50+ immigration consultants. Launching in 2 weeks.</p>
+            <form class="email-form" id="waitlistForm2">
+                <input type="email" class="email-input" placeholder="Enter your work email" required id="emailInput2">
+                <button type="submit" class="cta-button">Get Early Access</button>
+            </form>
+            <div class="success-message" id="successMessage2">
+                🎉 You're on the list! We'll email you when we launch.
+            </div>
+            <div class="trust-badge">✓ First 50 users lock in $49/mo forever  •  ✓ No credit card required</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DeadlineGuard. Built specifically for Canadian immigration consultants.</p>
+            <p style="margin-top: 20px; font-size: 14px;">Because one missed deadline can cost your client everything.</p>
+        </div>
+    </footer>
+
+    <script>
+        function handleSubmit(formId, successId, inputId) {
+            const form = document.getElementById(formId);
+            const successMessage = document.getElementById(successId);
+            const emailInput = document.getElementById(inputId);
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = emailInput.value;
+                
+                // Log to console (you'll integrate with your backend)
+                console.log('Email submitted:', email);
+                
+                // Integration options:
+                // - Google Forms (free, easy)
+                // - Tally.so (free, beautiful)
+                // - Mailchimp
+                // - ConvertKit
+                // - Your own backend API
+                
+                successMessage.classList.add('show');
+                emailInput.value = '';
+                
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+            });
+        }
+        
+        handleSubmit('waitlistForm', 'successMessage', 'emailInput');
+        handleSubmit('waitlistForm2', 'successMessage2', 'emailInput2');
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
